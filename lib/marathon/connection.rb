@@ -54,7 +54,7 @@ class Marathon::Connection
   # ++query++: Hash of query parameters.
   def query_params(query)
     query = query.select { |k, v| !v.nil? }
-    URI.escape(query.map { |k, v| "#{k}=#{v}" }.join('&'))
+    CGI.escape(query.map { |k, v| "#{k}=#{v}" }.join('&'))
   end
 
   # Create request object.
@@ -77,7 +77,7 @@ class Marathon::Connection
   # Create full URL with query parameters.
   # ++request++: hash containing :url and optional :query
   def build_url(request)
-    url = URI.escape(request[:url])
+    url = CGI.escape(request[:url])
     if request[:query].size > 0
       url += '?' + query_params(request[:query])
     end
